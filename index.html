@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>反内卷心理自评 · 北京师范大学地理科学学部</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f5f5f7;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1.5rem 1rem}
+.app{width:100%;max-width:420px;background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.screen{display:none}.screen.active{display:block}
+.prog-wrap{margin-bottom:1.25rem}
+.prog-bar-bg{height:3px;background:#e5e5ea;border-radius:2px}
+.prog-bar{height:3px;background:#534AB7;border-radius:2px;transition:width .4s}
+.prog-label{font-size:12px;color:#8e8e93;margin-bottom:6px;text-align:right}
+.q-num{font-size:12px;color:#8e8e93;margin-bottom:.5rem}
+.q-text{font-size:15px;font-weight:500;color:#1c1c1e;line-height:1.6;margin-bottom:1.25rem}
+.q-dim{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-bottom:.75rem;background:#f2f2f7;color:#636366}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{padding:10px 14px;border:1px solid #e5e5ea;border-radius:10px;cursor:pointer;font-size:14px;color:#1c1c1e;background:#fff;transition:border-color .15s,background .15s;text-align:left;font-family:inherit}
+.opt:hover{border-color:#c7c7cc;background:#f9f9fb}
+.opt.sel{border-color:#534AB7;background:#EEEDFE;color:#3C3489}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem}
+.btn{padding:8px 18px;border:1px solid #c7c7cc;border-radius:10px;background:transparent;color:#1c1c1e;font-size:14px;cursor:pointer;font-family:inherit}
+.btn:hover{background:#f2f2f7}
+.btn-pri{background:#534AB7;border-color:#534AB7;color:#fff}
+.btn-pri:hover{background:#3C3489;border-color:#3C3489}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.hero{text-align:center;padding:2rem 0 1.5rem}
+.hero-icon{font-size:40px;margin-bottom:1rem;color:#534AB7}
+.hero h1{font-size:20px;font-weight:500;color:#1c1c1e;margin-bottom:.75rem}
+.hero-desc{font-size:14px;color:#636366;line-height:1.8;margin-bottom:1rem}
+.start-btn{width:100%;padding:12px;margin-top:1.5rem;background:#534AB7;color:#fff;border:none;border-radius:12px;font-size:15px;cursor:pointer;font-family:inherit}
+.start-btn:hover{background:#3C3489}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:.75rem 0;justify-content:center}
+.tag{font-size:12px;padding:3px 10px;border-radius:10px;background:#f2f2f7;color:#636366}
+.footer-note{font-size:12px;color:#aeaeb2;margin-top:.75rem}
+.result-header{text-align:center;padding:1.5rem 0 1rem}
+.ring-wrap{position:relative;width:100px;height:100px;margin:0 auto 1rem}
+.ring-wrap svg{width:100px;height:100px}
+.ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:500;color:#1c1c1e}
+.level-badge{display:inline-block;font-size:13px;font-weight:500;padding:4px 14px;border-radius:10px;margin-bottom:.5rem}
+.result-sub{font-size:13px;color:#636366}
+.section{margin-bottom:1.25rem}
+.section-title{font-size:11px;font-weight:500;color:#8e8e93;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.06em}
+.dim-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.dim-label{font-size:13px;color:#636366;width:80px;flex-shrink:0}
+.dim-bg{flex:1;height:6px;background:#e5e5ea;border-radius:3px}
+.dim-fill{height:6px;border-radius:3px;transition:width .8s}
+.dim-val{font-size:12px;color:#aeaeb2;width:28px;text-align:right;flex-shrink:0}
+.cause-card{border:1px solid #e5e5ea;border-radius:10px;padding:.875rem 1rem;margin-bottom:.75rem;background:#fff}
+.cause-name{font-size:13px;font-weight:500;color:#1c1c1e;margin-bottom:.25rem}
+.cause-desc{font-size:13px;color:#636366;line-height:1.6}
+.sol-card{border-left:3px solid #534AB7;border-radius:0 10px 10px 0;padding:.75rem 1rem;margin-bottom:.75rem;background:#f9f9fb}
+.sol-title{font-size:13px;font-weight:500;color:#1c1c1e;margin-bottom:.35rem}
+.sol-body{font-size:13px;color:#636366;line-height:1.65}
+.divider{height:1px;background:#f2f2f7;margin:1.25rem 0}
+.restart-btn{width:100%;padding:10px;border:1px solid #c7c7cc;border-radius:10px;background:transparent;color:#1c1c1e;font-size:14px;cursor:pointer;font-family:inherit;margin-top:.5rem}
+.restart-btn:hover{background:#f2f2f7}
+.share-btn{width:100%;padding:10px;border:none;border-radius:10px;background:#534AB7;color:#fff;font-size:14px;cursor:pointer;font-family:inherit;margin-bottom:.5rem}
+.share-btn:hover{background:#3C3489}
+.copy-tip{font-size:12px;color:#34c759;text-align:center;margin-top:.25rem;min-height:18px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="screen active" id="s-home">
+  <div class="hero">
+    <div class="hero-icon"><i class="ti ti-brain"></i></div>
+    <h1>"反内卷"心理自评</h1>
+    <div class="hero-desc">
+      <span>了解内卷对你的影响程度，识别主要诱因</span><br>
+      <span>获取个性化应对建议</span>
+    </div>
+    <div class="tag-row">
+      <span class="tag"><i class="ti ti-clock"></i> 约5分钟</span>
+      <span class="tag"><i class="ti ti-lock"></i> 完全匿名</span>
+      <span class="tag"><i class="ti ti-heart"></i> 帮助你更好地学习与生活</span>
+    </div>
+    <div class="footer-note">北京师范大学地理科学学部</div>
+  </div>
+  <button class="start-btn" onclick="startQuiz()"><i class="ti ti-arrow-right"></i> 开始自评</button>
+</div>
+
+<div class="screen" id="s-quiz">
+  <div class="prog-wrap">
+    <div class="prog-label" id="prog-label">1 / 20</div>
+    <div class="prog-bar-bg"><div class="prog-bar" id="prog-bar" style="width:5%"></div></div>
+  </div>
+  <div class="q-num" id="q-num"></div>
+  <div class="q-dim" id="q-dim"></div>
+  <div class="q-text" id="q-text"></div>
+  <div class="opts" id="opts"></div>
+  <div class="nav">
+    <button class="btn" id="btn-prev" onclick="prev()">← 上一题</button>
+    <button class="btn btn-pri" id="btn-next" onclick="next()" disabled>下一题</button>
+  </div>
+</div>
+
+<div class="screen" id="s-result">
+  <div class="result-header">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e5ea" stroke-width="7"/>
+        <circle cx="50" cy="50" r="40" fill="none" id="ring-arc" stroke="#534AB7" stroke-width="7" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+      </svg>
+      <div class="ring-num" id="ring-num">0%</div>
+    </div>
+    <div class="level-badge" id="level-badge"></div>
+    <div class="result-sub" id="result-sub"></div>
+  </div>
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-title">各维度分布</div>
+    <div id="dims"></div>
+  </div>
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-title">主要诱发因素</div>
+    <div id="causes"></div>
+  </div>
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-title">个性化建议</div>
+    <div id="solutions"></div>
+  </div>
+  <div class="divider"></div>
+  <button class="share-btn" onclick="copyLink()"><i class="ti ti-share"></i> 复制分享链接</button>
+  <div class="copy-tip" id="copy-tip"></div>
+  <button class="restart-btn" onclick="restart()"><i class="ti ti-refresh"></i> 重新测试</button>
+</div>
+
+</div>
+<script>
+const Q=[
+  {dim:"exhaust",dimLabel:"身心耗竭",text:"最近两周，你经常感到身心俱疲，即使睡眠充足也难以恢复精力。",opts:["几乎没有","偶尔（每周1-2次）","经常（每周3-4次）","几乎每天都是"]},
+  {dim:"exhaust",dimLabel:"身心耗竭",text:"做作业或备考时，你频繁感到"撑不下去"，想放弃但又不敢放弃。",opts:["几乎没有","偶尔","经常","几乎每天"]},
+  {dim:"exhaust",dimLabel:"身心耗竭",text:"一天结束后，你常常感到被"掏空"，对明天的学习提不起任何期待。",opts:["几乎没有","偶尔","经常","几乎每天"]},
+  {dim:"exhaust",dimLabel:"身心耗竭",text:"你早上醒来时，想到要去上课或完成任务，会感到疲惫或抗拒。",opts:["几乎没有","偶尔","经常","几乎每天"]},
+  {dim:"compare",dimLabel:"比较焦虑",text:"看到室友/同学学习更努力或成绩更好，你会感到焦虑或不安。",opts:["完全不会","偶尔会","经常会","持续感到焦虑"]},
+  {dim:"compare",dimLabel:"比较焦虑",text:"你会不自觉地关注他人的绩点、学习时长或竞赛成果，并与自己比较。",opts:["不会","偶尔","经常","几乎是习惯性行为"]},
+  {dim:"compare",dimLabel:"比较焦虑",text:"当你的成绩或进展不如预期时，你倾向于认为自己"不够努力"而非其他原因。",opts:["完全不同意","偶尔这么想","经常这么想","几乎总是如此"]},
+  {dim:"meaning",dimLabel:"无意义感",text:"你觉得自己的努力大多是无效的内耗——付出很多，却感受不到真正的成长。",opts:["不这样觉得","偶尔有这种感觉","经常有","几乎一直如此"]},
+  {dim:"meaning",dimLabel:"无意义感",text:"你常常为了"不落后"而做了很多任务，但事后觉得没有真正的收获。",opts:["很少","偶尔","比较频繁","几乎总是这样"]},
+  {dim:"meaning",dimLabel:"无意义感",text:"你参与了一些活动（如刷竞赛、志愿时长），主要是因为"别人都在做"而非真正感兴趣。",opts:["几乎没有","偶尔","比较多","大部分都是这样"]},
+  {dim:"cynicism",dimLabel:"价值迷失",text:"你对所学专业感到迷茫或冷漠，觉得"努力也没什么用"。",opts:["完全没有","偶尔有","比较明显","非常明显"]},
+  {dim:"cynicism",dimLabel:"价值迷失",text:"你发现自己对曾经感兴趣的事物（爱好、社交）越来越提不起劲。",opts:["没有变化","略有减退","明显减退","几乎完全失去兴趣"]},
+  {dim:"cynicism",dimLabel:"价值迷失",text:"你有时会怀疑自己读大学/研究生的意义，或感到一切都没有价值感。",opts:["几乎没有","偶尔","比较频繁","经常有这种感觉"]},
+  {dim:"source",dimLabel:"压力来源",text:"你的内卷感受主要来自哪里？",opts:["课业成绩与绩点竞争","考研/保研名额竞争","科研/竞赛成果竞争","就业/实习机会竞争"]},
+  {dim:"source2",dimLabel:"压力来源",text:"你感受到内卷压力时，主要在意的是什么？",opts:["与同学的横向比较","对自己未来发展的担忧","来自家长或导师的期待","对自身能力的怀疑"]},
+  {dim:"coping",dimLabel:"应对方式",text:"当你感到内卷压力时，你通常怎么做？",opts:["继续硬撑，逼自己学","找人倾诉或寻求帮助","运动/娱乐等转移注意力","什么都不想做，陷入焦虑"]},
+  {dim:"support",dimLabel:"社会支持",text:"当你感到内耗或疲惫时，身边有可以倾诉的人吗？",opts:["有，经常能得到有效支持","有，但倾诉后感觉帮助不大","很少倾诉，自己消化","几乎没有可以倾诉的人"]},
+  {dim:"coping2",dimLabel:"应对方式",text:"你认为以下哪种方式最能帮你缓解内卷带来的压力？",opts:["调整对自己的预期和目标","减少与他人的比较","找到真正喜欢的事情做","获得外部认可和肯定"]},
+  {dim:"aware",dimLabel:"自我认知",text:"你认为自己目前的努力方式是有效且可持续的吗？",opts:["是，我觉得自己状态不错","大部分时候可以，偶尔会崩溃","勉强维持，但经常感到不可持续","不是，我觉得这样下去迟早撑不住"]},
+  {dim:"aware",dimLabel:"自我认知",text:"如果可以重新选择，你会改变目前的学习和竞争方式吗？",opts:["不会，我觉得现在的方式适合我","可能会做一些微调","会做比较大的改变","会彻底改变，但不知道怎么做"]}
+];
+const dimInfo={exhaust:{label:"身心耗竭",max:12,color:"#D85A30"},compare:{label:"比较焦虑",max:9,color:"#534AB7"},meaning:{label:"无意义感",max:9,color:"#BA7517"},cynicism:{label:"价值迷失",max:9,color:"#E24B4A"}};
+let cur=0,ans=[];
+function startQuiz(){show('s-quiz');render()}
+function render(){
+  const q=Q[cur],total=Q.length,pct=Math.round((cur/total)*100);
+  document.getElementById('prog-label').textContent=(cur+1)+' / '+total;
+  document.getElementById('prog-bar').style.width=Math.max(pct,3)+'%';
+  document.getElementById('q-num').textContent='第 '+(cur+1)+' 题';
+  document.getElementById('q-dim').textContent=q.dimLabel;
+  document.getElementById('q-text').textContent=q.text;
+  const sel=ans[cur]!==undefined?ans[cur]:-1;
+  document.getElementById('opts').innerHTML=q.opts.map((o,i)=>`<button class="opt${sel===i?' sel':''}" onclick="choose(${i})">${o}</button>`).join('');
+  document.getElementById('btn-prev').disabled=cur===0;
+  document.getElementById('btn-next').disabled=sel===-1;
+  document.getElementById('btn-next').textContent=cur===total-1?'查看结果 →':'下一题';
+}
+function choose(i){ans[cur]=i;render()}
+function prev(){if(cur>0){cur--;render()}}
+function next(){if(ans[cur]===undefined)return;if(cur<Q.length-1){cur++;render();}else showResult()}
+function calcScores(){
+  const s={exhaust:0,compare:0,meaning:0,cynicism:0};
+  Q.forEach((q,i)=>{if(ans[i]===undefined)return;const v=ans[i];if(q.dim==='exhaust')s.exhaust+=v;if(q.dim==='compare')s.compare+=v;if(q.dim==='meaning')s.meaning+=v;if(q.dim==='cynicism')s.cynicism+=v;});
+  return s;
+}
+function showResult(){
+  show('s-result');
+  const s=calcScores(),total=s.exhaust+s.compare+s.meaning+s.cynicism,maxTotal=39,pct=Math.round(total/maxTotal*100);
+  const circ=2*Math.PI*40,arc=document.getElementById('ring-arc');
+  arc.style.strokeDasharray=circ.toFixed(1);
+  arc.style.strokeDashoffset=(circ*(1-pct/100)).toFixed(1);
+  document.getElementById('ring-num').textContent=pct+'%';
+  let level,lc,lbg,lsub;
+  if(pct<=25){level="轻度影响";lc="#27500A";lbg="#EAF3DE";lsub="你目前的心理状态较为稳定，内卷影响在可控范围内。"}
+  else if(pct<=50){level="中度影响";lc="#633806";lbg="#FAEEDA";lsub="内卷对你有一定影响，部分维度需要留意和调节。"}
+  else if(pct<=72){level="较重影响";lc="#712B13";lbg="#FAECE7";lsub="内卷对你的身心状态影响较为明显，建议主动调整。"}
+  else{level="重度影响";lc="#791F1F";lbg="#FCEBEB";lsub="内卷已显著消耗你的心理资源，请认真对待并寻求支持。"}
+  const badge=document.getElementById('level-badge');
+  badge.textContent=level;badge.style.background=lbg;badge.style.color=lc;
+  document.getElementById('result-sub').textContent=lsub;
+  document.getElementById('dims').innerHTML=Object.entries(dimInfo).map(([k,d])=>{const v=s[k],p=Math.round(v/d.max*100);return`<div class="dim-row"><span class="dim-label">${d.label}</span><div class="dim-bg"><div class="dim-fill" style="width:${p}%;background:${d.color}"></div></div><span class="dim-val">${v}/${d.max}</span></div>`}).join('');
+  const causes=[];
+  if(s.exhaust>=7)causes.push({name:"身心耗竭",desc:"你的精力消耗已超过可持续水平，身体用疲惫提醒你边界已至。"});
+  else if(s.exhaust>=4)causes.push({name:"轻度疲惫",desc:"精力有所消耗，注意保持合理的休息节奏。"});
+  if(s.compare>=6)causes.push({name:"比较焦虑",desc:"他人的学习行为持续触发你的不安全感，同伴比较机制对你影响较大。"});
+  if(s.meaning>=6)causes.push({name:"无意义感",desc:"你在大量任务中难以找到真实成长的感受，努力与收获之间存在明显落差。"});
+  if(s.cynicism>=6)causes.push({name:"价值迷失",desc:"对专业和未来的热情在消退，可能源于外部目标压迫了内在动机。"});
+  if(causes.length===0)causes.push({name:"总体稳定",desc:"各维度得分在可控范围内，继续保持当前的自我调节习惯。"});
+  document.getElementById('causes').innerHTML=causes.map(c=>`<div class="cause-card"><div class="cause-name">${c.name}</div><div class="cause-desc">${c.desc}</div></div>`).join('');
+  document.getElementById('solutions').innerHTML=buildSols(s,ans[13],ans[15],ans[16]).map(sol=>`<div class="sol-card"><div class="sol-title">${sol.t}</div><div class="sol-body">${sol.b}</div></div>`).join('');
+}
+function buildSols(s,src,cop,sup){
+  const list=[];
+  if(s.exhaust>=7)list.push({t:"优先恢复身心资源",b:"你的疲惫已超过正常波动范围。建议每天设定一个"停止学习时间"并严格执行，不以"学完再休息"为目标。睡前30分钟禁止接触学业信息。"});
+  else if(s.exhaust>=4)list.push({t:"建立可持续学习节奏",b:"可尝试番茄工作法（25分钟专注+5分钟休息），每天预留至少30分钟非学业自由时间。"});
+  if(s.compare>=6)list.push({t:"重建"自我参照"评价体系",b:"建议每周写一段"本周我比上周进步了什么"，评判标准仅为与昨天的自己比较。减少查看他人绩点的频率，这是保护注意力资源，不是逃避。"});
+  if(s.meaning>=6)list.push({t:"从"完成任务"转向"主动提取收获"",b:"每完成一个任务，花3分钟回答"我从中学到了什么真正有用的东西"。坚持一周后，你会开始更有选择性地投入精力。"});
+  if(s.cynicism>=6)list.push({t:"重新连接内在动机",b:"热情流失是心理耗竭的危险信号。建议约一次与你欣赏的师兄师姐的非正式聊天，或翻看当初选择这个专业时让你心动的东西。若迷茫感持续超过两周，建议预约心理咨询中心。"});
+  const srcMap=["应对绩点压力：分析哪些课程投入产出比最高，将精力集中于高权重课程，尝试组建3-5人学习小组共享重点资料。","应对考研压力：将目标院校、复习科目、时间节点做成可视化时间轴，每天只关注"今天的任务"，而非"还有多远"。","应对科研压力：科研进展缓慢不代表能力不足。建议与导师建立周期性沟通，每次组会前梳理"本周做了什么/遇到了什么问题"。","应对就业压力：将就业焦虑拆解为具体问题（简历？实习？方向？），逐一制定可操作小步骤。"];
+  if(src!==undefined)list.push({t:"压力来源：针对性策略",b:srcMap[src]});
+  if(cop===0)list.push({t:"改变"硬撑"模式",b:"超过临界点的强制学习会降低记忆巩固效率。建议每连续学习90分钟，必须离开座位活动15分钟，不论任务是否完成。"});
+  else if(cop===3)list.push({t:"打破焦虑回避循环",b:"可尝试"2分钟启动法"：告诉自己只做2分钟，时间到了再决定。大多数情况下，启动是最难的部分。若焦虑严重影响日常生活，请主动寻求心理支持。"});
+  if(sup===3)list.push({t:"主动建立支持网络",b:"独自消化长期压力会加重耗竭。可从低门槛开始：找一个你信任的同学，约定每周互相问一句"你最近怎么样"。"});
+  if(list.length===0)list.push({t:"保持现有节奏，注意预防性维护",b:"你目前状态相对稳定。建议保持规律的睡眠、运动和社交，将压力管理作为长期习惯而非危机应对措施。"});
+  return list;
+}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function restart(){cur=0;ans=[];show('s-quiz');render()}
+function copyLink(){
+  const url=window.location.href;
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>{document.getElementById('copy-tip').textContent='✓ 链接已复制，快分享给同学吧！';setTimeout(()=>document.getElementById('copy-tip').textContent='',3000)});}
+  else{document.getElementById('copy-tip').textContent='请手动复制浏览器地址栏链接'}
+}
+</script>
+</body>
+</html>
